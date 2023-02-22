@@ -11,9 +11,11 @@ const player2 = document.getElementById('current--1');
 const player1EL = document.querySelector('.player--0');
 const player2EL = document.querySelector('.player--1');
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
+// const scores = [0, 0];
+// let currentScore = 0;
+// let activePlayer = 0;
+
+
 
 const switchPlayer = function () {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -25,10 +27,33 @@ const switchPlayer = function () {
 };
 
 //starting conditions
-score0.textContent = 0;
-score1.textContent = 0;
-diceEL.classList.add('hidden');
+// score0.textContent = 0;
+// score1.textContent = 0;
+let scores, currentScore, activePlayer;
+const init = function (){
+  
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  
+  score0.textContent = 0;
+  score1.textContent = 0;
+  player1.textContent = 0;
+  player2.textContent = 0;
+  
+  player1EL.classList.remove('player--winner');
+  player2EL.classList.remove('player--winner');
+  player1EL.classList.add('player--active');
+  player2EL.classList.remove('player--active');
+  diceEL.classList.add('hidden');
+  document.getElementById('name--0').textContent = 'Player 1';
+  document.getElementById('name--1').textContent = 'Player 2';
+   btnroll.disabled = false;
+   hold.disabled = false;
 
+}
+
+init();
 //rolling dice
 
 btnroll.addEventListener('click', function () {
@@ -58,7 +83,7 @@ hold.addEventListener('click', function () {
 
   //check if score is at least 100
   //finish the game or switch to next player
-  if (scores[activePlayer] >= 30) {
+  if (scores[activePlayer] >= 100) {
     document.querySelector(`#name--${activePlayer}`).textContent = `Player ${
       activePlayer === 0 ? 1 : 2
     } wins🎉`;
@@ -69,6 +94,7 @@ hold.addEventListener('click', function () {
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.remove('player--active');
+    diceEL.classList.add('hidden');
 
     btnroll.disabled = true;
     hold.disabled = true;
@@ -76,3 +102,14 @@ hold.addEventListener('click', function () {
     switchPlayer();
   }
 });
+
+//new game.
+
+// const newGame = function () {
+
+//   btnroll.disabled = false;
+//   hold.disabled = false;
+
+// };
+
+newbtn.addEventListener('click', init);
